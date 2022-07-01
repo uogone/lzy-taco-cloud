@@ -8,8 +8,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import javax.annotation.Resource;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(TacoController.class)
 public class TacoControllerTest {
@@ -25,7 +24,7 @@ public class TacoControllerTest {
                         .param("ingredients", "SRCR")
                         .param("name", "L's Taco"))
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:/orders/current"));
+                .andExpect(status().is3xxRedirection());
     }
 
     @Test
@@ -34,7 +33,7 @@ public class TacoControllerTest {
                         .post("/design")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("ingredients", "SRCR"))
-                .andExpect(model().errorCount(2))
-                .andExpect(view().name("design"));
+                .andExpect(model().hasErrors())
+                .andExpect(status().is5xxServerError());
     }
 }
