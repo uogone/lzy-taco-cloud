@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Controller
@@ -28,12 +28,11 @@ public class TacoController {
 
     @ModelAttribute
     private void addIngredientsToModel(Model model) {
-        List<Ingredient> ingredients = ingredientRepository.findAll();
+        Iterable<Ingredient> ingredients = ingredientRepository.findAll();
         Ingredient.Type[] types = Ingredient.Type.values();
         for (Ingredient.Type type : types) {
             model.addAttribute(type.toString().toLowerCase(),
-                    ingredients
-                            .stream()
+                    StreamSupport.stream(ingredients.spliterator(), false)
                             .filter(x -> x.getType().equals(type))
                             .collect(Collectors.toList()));
         }

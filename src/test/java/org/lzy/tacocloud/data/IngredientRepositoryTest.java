@@ -3,9 +3,9 @@ package org.lzy.tacocloud.data;
 import org.junit.jupiter.api.Test;
 import org.lzy.tacocloud.domain.Ingredient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -14,9 +14,12 @@ public class IngredientRepositoryTest {
     @Resource
     private IngredientRepository ingredientRepository;
 
+    @Resource
+    private JdbcAggregateTemplate jdbcAggregateTemplate;
+
     @Test
     public void testFindAll() {
-        List<Ingredient> ingredients = ingredientRepository.findAll();
+        Iterable<Ingredient> ingredients = ingredientRepository.findAll();
         ingredients.forEach(System.out::println);
     }
 
@@ -28,8 +31,7 @@ public class IngredientRepositoryTest {
 
     @Test
     public void testSave() {
-        ingredientRepository.save(new Ingredient("TEST", "test", Ingredient.Type.SAUCE));
-        Optional<Ingredient> optional = ingredientRepository.findById("TEST");
-        System.out.println(optional.orElse(null));
+        Ingredient ingredient = new Ingredient("TEST", "test", Ingredient.Type.SAUCE);
+        Ingredient after = jdbcAggregateTemplate.insert(ingredient);
     }
 }
