@@ -1,15 +1,21 @@
 package org.lzy.tacocloud.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class Taco {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Taco implements Serializable {
 
     private Long id;
 
@@ -20,5 +26,9 @@ public class Taco {
     private String name;
 
     @NotEmpty(message = "至少选择一个ingredient")
-    private List<Ingredient> ingredients;
+    private List<IngredientRef> ingredients = new ArrayList<>();
+
+    public void addIngredient(IngredientRef ingredient) {
+        ingredients.add(ingredient);
+    }
 }
