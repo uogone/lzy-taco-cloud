@@ -16,7 +16,7 @@ public class IngredientRepositoryTest {
 
     @Test
     public void testFindAll() {
-        List<Ingredient> ingredients = ingredientRepository.findAll();
+        Iterable<Ingredient> ingredients = ingredientRepository.findAll();
         ingredients.forEach(System.out::println);
     }
 
