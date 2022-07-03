@@ -32,6 +32,7 @@ public class IngredientRepositoryTest {
     @Test
     public void testSave() {
         Ingredient ingredient = new Ingredient("TEST", "test", Ingredient.Type.SAUCE);
-        Ingredient after = jdbcAggregateTemplate.insert(ingredient);
+        jdbcAggregateTemplate.insert(ingredient);
+        System.out.println(ingredient);
     }
 }

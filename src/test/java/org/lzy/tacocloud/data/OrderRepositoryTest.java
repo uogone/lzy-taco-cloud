@@ -1,7 +1,7 @@
 package org.lzy.tacocloud.data;
 
 import org.junit.jupiter.api.Test;
-import org.lzy.tacocloud.domain.Ingredient;
+import org.lzy.tacocloud.domain.IngredientRef;
 import org.lzy.tacocloud.domain.Taco;
 import org.lzy.tacocloud.domain.TacoOrder;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,13 +19,13 @@ public class OrderRepositoryTest {
         Taco taco1 = new Taco();
         taco1.setCreatedTime(new Date());
         taco1.setName("taco1");
-        taco1.addIngredient(new Ingredient("SRCR", "Sour Cream", Ingredient.Type.SAUCE));
-        taco1.addIngredient(new Ingredient("FLTO", "Flour Tortilla", Ingredient.Type.WRAP));
+        taco1.addIngredient(new IngredientRef("SRCR"));
+        taco1.addIngredient(new IngredientRef("FLTO"));
 
         Taco taco2 = new Taco();
         taco2.setCreatedTime(new Date());
         taco2.setName("taco2");
-        taco2.addIngredient(new Ingredient("FLTO", "Flour Tortilla", Ingredient.Type.WRAP));
+        taco2.addIngredient(new IngredientRef("FLTO"));
 
         TacoOrder order = new TacoOrder();
         order.addTaco(taco1);
@@ -36,7 +36,7 @@ public class OrderRepositoryTest {
         order.setCcNumber("cn");
         order.setDeliveryCity("city");
         order.setDeliveryName("lzy");
-        order.setDeliveryState("state");
+        order.setDeliveryState("st");
         order.setDeliveryStreet("street");
         order.setDeliveryZip("zip");
 

@@ -2,6 +2,7 @@ package org.lzy.tacocloud.domain;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 public class TacoOrder implements Serializable {
 
+    @Id
     private Long id;
 
     private Date createdTime;
