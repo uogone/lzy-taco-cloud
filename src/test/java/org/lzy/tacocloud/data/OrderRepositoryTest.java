@@ -5,9 +5,11 @@ import org.lzy.tacocloud.domain.IngredientRef;
 import org.lzy.tacocloud.domain.Taco;
 import org.lzy.tacocloud.domain.TacoOrder;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Optional;
 
 @SpringBootTest
 public class OrderRepositoryTest {
@@ -31,12 +33,12 @@ public class OrderRepositoryTest {
         order.addTaco(taco1);
         order.addTaco(taco2);
         order.setCreatedTime(new Date());
-        order.setCcCVV("cc");
+        order.setCvv("cc");
         order.setCcExpiration("ce");
         order.setCcNumber("cn");
         order.setDeliveryCity("city");
         order.setDeliveryName("lzy");
-        order.setDeliveryState("state");
+        order.setDeliveryState("st");
         order.setDeliveryStreet("street");
         order.setDeliveryZip("zip");
 
@@ -46,7 +48,14 @@ public class OrderRepositoryTest {
     @Test
     public void testSave() {
         TacoOrder order = mockOrder();
-        orderRepository.save(order);
-        System.out.println(order);
+        TacoOrder after = orderRepository.save(order);
+        System.out.println(after);
+    }
+
+    @Test
+    @Transactional
+    public void testFindById() {
+        Optional<TacoOrder> order = orderRepository.findById(1L);
+        System.out.println(order.orElse(null));
     }
 }
