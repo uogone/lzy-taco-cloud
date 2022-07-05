@@ -49,11 +49,4 @@ public class OrderController {
 
         return order.toString();
     }
-
-    @GetMapping("/del/{id}")
-    @ResponseBody
-    public String cancelOrder(@PathVariable Long id) {
-        orderRepository.deleteById(id);
-        return "Success";
-    }
 }

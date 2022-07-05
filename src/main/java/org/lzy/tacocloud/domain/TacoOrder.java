@@ -1,20 +1,20 @@
 package org.lzy.tacocloud.domain;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
-@Entity
+@Document
 public class TacoOrder implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private Date createdTime;
 
@@ -34,9 +34,6 @@ public class TacoOrder implements Serializable {
 
     private String cvv;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
-    @OrderColumn(name = "ordinal")
     private List<Taco> tacos = new ArrayList<>();
 
     public void addTaco(Taco taco) {

@@ -1,8 +1,8 @@
 package org.lzy.tacocloud.data;
 
 import org.lzy.tacocloud.domain.TacoOrder;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface OrderRepository extends JpaRepository<TacoOrder, Long> {
+public interface OrderRepository extends CrudRepository<TacoOrder, String> {
 
 }

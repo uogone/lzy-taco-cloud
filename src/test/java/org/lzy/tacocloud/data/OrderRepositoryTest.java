@@ -1,11 +1,10 @@
 package org.lzy.tacocloud.data;
 
 import org.junit.jupiter.api.Test;
-import org.lzy.tacocloud.domain.IngredientRef;
+import org.lzy.tacocloud.domain.Ingredient;
 import org.lzy.tacocloud.domain.Taco;
 import org.lzy.tacocloud.domain.TacoOrder;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -21,13 +20,13 @@ public class OrderRepositoryTest {
         Taco taco1 = new Taco();
         taco1.setCreatedTime(new Date());
         taco1.setName("taco1");
-        taco1.addIngredient(new IngredientRef("SRCR"));
-        taco1.addIngredient(new IngredientRef("FLTO"));
+        taco1.addIngredient(new Ingredient("SRCR"));
+        taco1.addIngredient(new Ingredient("FLTO"));
 
         Taco taco2 = new Taco();
         taco2.setCreatedTime(new Date());
         taco2.setName("taco2");
-        taco2.addIngredient(new IngredientRef("FLTO"));
+        taco2.addIngredient(new Ingredient("FLTO"));
 
         TacoOrder order = new TacoOrder();
         order.addTaco(taco1);
@@ -53,9 +52,8 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    @Transactional
     public void testFindById() {
-        Optional<TacoOrder> order = orderRepository.findById(1L);
+        Optional<TacoOrder> order = orderRepository.findById("order1");
         System.out.println(order.orElse(null));
     }
 }

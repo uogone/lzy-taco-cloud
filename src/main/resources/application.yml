@@ -1,7 +1,4 @@
 spring:
-  datasource:
-    name: taco-cloud
-    url: jdbc:h2:mem:taco-cloud
-  jpa:
-    hibernate:
-      ddl-auto: none
+  mongodb:
+    embedded:
+      version: 3.4.5
