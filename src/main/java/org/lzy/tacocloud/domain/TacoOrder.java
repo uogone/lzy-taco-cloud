@@ -3,6 +3,7 @@ package org.lzy.tacocloud.domain;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Data
 @Document
+@RestResource(rel = "orders", path = "orders")
 public class TacoOrder implements Serializable {
 
     @Id

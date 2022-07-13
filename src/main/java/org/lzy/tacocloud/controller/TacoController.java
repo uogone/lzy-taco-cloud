@@ -2,10 +2,14 @@ package org.lzy.tacocloud.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.lzy.tacocloud.data.IngredientRepository;
+import org.lzy.tacocloud.data.TacoRepository;
 import org.lzy.tacocloud.domain.Ingredient;
 import org.lzy.tacocloud.domain.Taco;
 import org.lzy.tacocloud.domain.TacoOrder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -22,10 +27,14 @@ import java.util.stream.StreamSupport;
 @Controller
 @RequestMapping
 @SessionAttributes({"order"})
+@CrossOrigin(origins = "*")
 public class TacoController {
 
     @Resource
     private IngredientRepository ingredientRepository;
+
+    @Resource
+    private TacoRepository tacoRepository;
 
     @Value("${server.port}")
     private Integer test;
@@ -48,10 +57,13 @@ public class TacoController {
         return "design";
     }
 
-    @GetMapping("/taco/list")
+    @GetMapping(value = "/taco/recent", produces = "application/json")
     @ResponseBody
-    public String listAllTacos(@SessionAttribute Optional<TacoOrder> order) {
-        return order.orElse(new TacoOrder()).getTacos().toString();
+    public List<Taco> listAllTacos() {
+        Pageable page = PageRequest.of(0, 20, Sort.by("createdTime").descending());
+        //return new ObjectMapper().writeValueAsString(tacoRepository.findAll(page));
+        //return new ResponseEntity<>(tacoRepository.findAll(page), HttpStatus.OK);
+        return tacoRepository.findAll(page);
     }
 
     @PostMapping("/design")

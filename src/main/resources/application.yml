@@ -1,3 +1,9 @@
 spring:
   profiles:
     active: dev
+  mongodb:
+    embedded:
+      version: 3.4.5
+  data:
+    rest:
+      base-path: /api
