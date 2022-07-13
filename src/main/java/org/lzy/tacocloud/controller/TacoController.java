@@ -5,6 +5,7 @@ import org.lzy.tacocloud.data.IngredientRepository;
 import org.lzy.tacocloud.domain.Ingredient;
 import org.lzy.tacocloud.domain.Taco;
 import org.lzy.tacocloud.domain.TacoOrder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,9 @@ public class TacoController {
 
     @Resource
     private IngredientRepository ingredientRepository;
+
+    @Value("${server.port}")
+    private Integer test;
 
     @ModelAttribute
     private void addIngredientsToModel(Model model) {
@@ -71,5 +75,11 @@ public class TacoController {
         log.info("current order: " + order);
 
         return "redirect:/order";
+    }
+
+    @GetMapping("/test")
+    @ResponseBody
+    public String test() {
+        return test.toString();
     }
 }

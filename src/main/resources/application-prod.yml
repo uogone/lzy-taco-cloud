@@ -1,0 +1,14 @@
+spring:
+  mongodb:
+    embedded:
+      version: 3.4.5
+  config:
+    activate:
+      on-profile: prod
+server:
+  # enable https
+  ssl:
+    key-store: classpath:mykeys.jks
+    key-store-password: kstest
+    key-password: kstest
+  port: 0
