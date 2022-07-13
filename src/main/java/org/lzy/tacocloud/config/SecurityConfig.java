@@ -13,6 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Optional;
 
+import static org.springframework.security.authorization.AuthorityAuthorizationManager.hasRole;
+
 @Configuration
 public class SecurityConfig {
 
@@ -32,14 +34,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeRequests()
-                    .antMatchers("/design", "/order").hasRole("USER")
-                    .antMatchers("/**").access("permitAll()")
-                .and()
+                .authorizeHttpRequests(authorize -> authorize
+                        .mvcMatchers("/design", "/order").hasRole("USER")
+                        .mvcMatchers("/db/**").access(((authentication, request) ->
+                                Optional.of(hasRole("ADMIN").check(authentication, request))
+                                        .filter(decision -> !decision.isGranted())
+                                        .orElseGet(() -> hasRole("DBA").check(authentication, request))))
+                        .antMatchers("/**").permitAll())
                 .formLogin()
                     .loginPage("/login")
-                    .defaultSuccessUrl("/design", false)
-                .and()
+                    .defaultSuccessUrl("/design", false).and()
+                .logout()
+                    .logoutSuccessUrl("/").and()
                 .build();
     }
 }
